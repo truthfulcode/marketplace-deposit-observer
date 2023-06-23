@@ -1,0 +1,32 @@
+{
+  "name": "marketplace-deposit-observer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+
+  "dependencies": {
+    "aes-js": "^4.0.0-beta.5",
+    "axios": "^1.4.0",
+    "dotenv": "^16.1.3",
+    "ethers": "^5.7.2",
+    "tslib": "^2.4.0",
+    "ws": "^8.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/truthfulcode/marketplace-deposit-observer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/truthfulcode/marketplace-deposit-observer/issues"
+  },
+  "homepage": "https://github.com/truthfulcode/marketplace-deposit-observer#readme",
+  "devDependencies": {
+    "@types/node": "^20.2.5"
+  }
+}

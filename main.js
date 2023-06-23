@@ -37,21 +37,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _a, _b;
 exports.__esModule = true;
-exports.SupportedToken = exports.NetworksRPCs = void 0;
 var ethers_1 = require("ethers");
 var dotenv = require("dotenv");
 var abi_1 = require("./abi");
 var axios_1 = require("axios");
-var constants_1 = require("../utils/constants");
-var types_1 = require("../utils/types");
 dotenv.config();
-exports.NetworksRPCs = (_a = {},
-    _a[types_1.Network.Localhost] = process.env.LOCAL_TESTNET_RPC,
-    _a[types_1.Network.Goerli] = process.env.GOERLI_TESTNET_RPC,
+var Network;
+(function (Network) {
+    Network[Network["Localhost"] = 0] = "Localhost";
+    Network[Network["Goerli"] = 1] = "Goerli";
+})(Network || (Network = {}));
+var NETWORK_OPTION = Network.Goerli;
+var NetworksRPCs = (_a = {},
+    _a[Network.Localhost] = process.env.LOCAL_TESTNET_RPC,
+    _a[Network.Goerli] = process.env.GOERLI_TESTNET_RPC,
     _a);
-exports.SupportedToken = (_b = {},
-    _b[types_1.Network.Localhost] = process.env.LOCAL_TOKEN_ADDRESS,
-    _b[types_1.Network.Goerli] = process.env.GOERLI_TOKEN_ADDRESS,
+var SupportedToken = (_b = {},
+    _b[Network.Localhost] = process.env.LOCAL_TOKEN_ADDRESS,
+    _b[Network.Goerli] = process.env.GOERLI_TOKEN_ADDRESS,
     _b);
 function addressDeposit(address, amount, txHash) {
     return __awaiter(this, void 0, void 0, function () {
@@ -83,10 +86,10 @@ function addressDeposit(address, amount, txHash) {
 }
 function main() {
     var _this = this;
-    console.log(exports.NetworksRPCs[constants_1.NETWORK_OPTION], exports.SupportedToken[constants_1.NETWORK_OPTION]);
     // @ts-ignore
-    var provider = new ethers_1.ethers.providers.JsonRpcProvider(exports.NetworksRPCs[constants_1.NETWORK_OPTION]);
-    var contract = new ethers_1.ethers.Contract(exports.SupportedToken[constants_1.NETWORK_OPTION], abi_1.abi, provider);
+    console.log(NetworksRPCs[NETWORK_OPTION]);
+    var provider = new ethers_1.ethers.providers.JsonRpcProvider(NetworksRPCs[NETWORK_OPTION]);
+    var contract = new ethers_1.ethers.Contract(SupportedToken[NETWORK_OPTION], abi_1.abi, provider);
     contract.on("Transfer", function (from, to, value, event) { return __awaiter(_this, void 0, void 0, function () {
         var transferEvent;
         return __generator(this, function (_a) {
@@ -99,6 +102,7 @@ function main() {
                         eventData: event
                     };
                     if (!(Number(value) >= 1e6)) return [3 /*break*/, 2];
+                    console.log("Deposit =>", value);
                     return [4 /*yield*/, addressDeposit(to, value, event.transactionHash)];
                 case 1:
                     _a.sent();
